@@ -22,6 +22,8 @@ app.post('/', (req, res) => {
   req.body.nickname, req.body.email.toLowerCase(), function (err) {
     if (err) {
       res.json({error : "overlap"})
+    } else {
+      res.json({error : "None"})
     }
   });
 })
