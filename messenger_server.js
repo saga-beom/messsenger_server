@@ -1,36 +1,15 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const sqlite3 = require("sqlite3").verbose();
-const bodyParser = require('body-parser');
+const sqlite3 = require("sqlite3").verbose()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extented: true}))
+const setUpAccountRouter = require('./creatAccount/account')
 
-const db = new sqlite3.Database('./Account.db',sqlite3.OPEN_READWRITE,(err) => {
-  if(err) {
-    console.error(err.message);
-  } else {
-    console.log('connected to the mydb database');
-  }
-})
+app.use("/setUpAccount", setUpAccountRouter)
 
-app.post('/', (req, res) => {
-  console.log("POST API called")
-  db.run('INSERT INTO ACCOUNT(ID,PW,Nickname,Email) VALUES(?,?,?,?)', 
-  req.body.id.toLowerCase(), req.body.pwd, 
-  req.body.nickname, req.body.email.toLowerCase(), function (err) {
-    if (err) {
-      res.json({error : "overlap"})
-    } else {
-      res.json({error : "None"})
-    }
-  });
-})
 
-app.get('/', (req, res) => { // 중복된 아이디 있을 때 API 넘겨주기 
-  console.log("API call")
-  res.json({test : "test"})
+app.get('/', (req, res) => {  
+  res.send("Server is Operating")
 }) 
 
 app.listen(port, () => {
