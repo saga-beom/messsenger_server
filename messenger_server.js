@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const sqlite3 = require("sqlite3").verbose()
 
-const setUpAccountRouter = require('./creatAccount/account')
+const setUpAccountRouterAPI = require('./creatAccountAPI/account')
+const logInAPI = require('./logInAPI/logIn')
 
-app.use("/setUpAccount", setUpAccountRouter)
+app.use("/setUpAccount", setUpAccountRouterAPI)
+app.use("/logIn", logInAPI)
 
 
 app.get('/', (req, res) => {  
