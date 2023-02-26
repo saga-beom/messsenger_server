@@ -47,6 +47,16 @@ io.on('connection', (socket) => {
     
   });
 
+  socket.on('chat request', (req) => {
+    console.log('request chat')
+    const receiverSocketId = userSockets[req.receiver]
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('chat request', req.sender)
+    } else {
+      console.log(`receiver ${req.receiver} is not registered`)
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected with socket id: ' + socket.id);
   });
